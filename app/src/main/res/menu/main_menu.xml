@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activities.MainActivity">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="always"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        android:title="@string/app_name"/>
+
+    <item
+        android:id="@+id/action_share"
+        android:icon="@drawable/sharemain"
+        app:showAsAction="always"
+        android:title="@string/app_name"/>
+
+    <item
+        android:id="@+id/action_setting"
+        android:icon="@drawable/setting"
+        app:showAsAction="always"
+        android:title="@string/app_name"/>
+
+
+</menu>
