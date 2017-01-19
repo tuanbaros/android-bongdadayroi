@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="app.com.bongdadayroi.activities.TestAppLink">
+
+    <com.vmax.android.ads.api.VmaxAdView
+        android:id="@+id/banner_adview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        app:vmax_UX_type="0"
+        app:vmax_adspot_id="cb9e24d8" />
+
+    <vn.amobi.util.ads.AmobiAdView
+        android:id="@+id/amobiAdview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+       />
+
+</RelativeLayout>

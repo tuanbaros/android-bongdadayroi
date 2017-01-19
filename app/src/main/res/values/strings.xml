@@ -1,0 +1,46 @@
+<resources>
+
+    <string name="app_name">Bóng đá đây rồi</string>
+
+    <string name="app_id">232641390430584</string>
+
+    <string name="widget_id_mobistar">2641a6d11f76f544a897fa9388636427</string>
+
+    <string name="widget_id_normal">4bc9b22515311df2adbdad329383ee57</string>
+
+    <string name="widget_id_vgroup">2f5a16e10a38467f31b59750888e604f</string>
+
+    <string name="details">kho video bóng đá mới nhất, hay nhất và hấp dẫn nhất</string>
+
+    <string name="copyright">1.8-google-20160812</string>
+
+    <string name="search_hint">search</string>
+
+    <string name="trang_chu">Trang chủ</string>
+
+    <string name="xem_nhieu">Xem nhiều</string>
+
+    <string name="dang_nhap_facebook">Đăng nhập với Facebook</string>
+
+    <string name="dang_xuat_facebook">Đăng xuất</string>
+
+    <array name="category">
+        <item>Trang chủ</item>
+        <item>Mới cập nhật</item>
+        <item>Xem nhiều nhất</item>
+    </array>
+
+
+    <array name="setting">
+        <item>Nhận thông báo khi có video mới</item>
+        <item>Nhận thông báo khi có bình luận mới</item>
+    </array>
+
+    <string name="red">Liên quan</string>
+    <string name="blue">Bình luận</string>
+
+    <string name="drawer_open">drawer_open</string>
+    <string name="drawer_close">drawer_close</string>
+    <string name="advertisement">Advertisement</string>
+
+</resources>

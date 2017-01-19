@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    android:id="@+id/rlMain">
+
+    <RelativeLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/ivLeft"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:padding="18dp"
+            android:src="@drawable/left" />
+
+        <TextView
+            android:id="@+id/feature"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_toRightOf="@+id/ivLeft"
+            android:gravity="center_vertical|left"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/ivLike"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_toLeftOf="@+id/ivFollow"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:src="@drawable/like2" />
+
+        <ImageView
+            android:id="@+id/ivFollow"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:layout_toLeftOf="@+id/ivShare"
+            android:src="@drawable/following" />
+
+        <ImageView
+            android:id="@+id/ivShare"
+            android:layout_alignParentRight="true"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:src="@drawable/share" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/frame_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topBar">
+
+        <com.devbrackets.android.exomedia.EMVideoView
+            android:id="@+id/emVideoView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.youtube.player.YouTubePlayerView
+            android:id="@+id/youtube_player"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/frame_video"
+        android:layout_alignBottom="@+id/frame_video"
+        android:layout_alignLeft="@+id/frame_video"
+        android:layout_alignRight="@+id/frame_video"
+        android:background="#70000000"
+        android:visibility="gone"
+        >
+        <ImageView
+            android:id="@+id/ivFull"
+            android:padding="12dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/fullscreen"/>
+
+        <org.lucasr.twowayview.TwoWayView
+            android:id="@+id/twvLiveLink"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_toStartOf="@+id/ivFull"
+            android:layout_toLeftOf="@+id/ivFull"
+            android:layout_alignParentTop="true"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_below="@+id/frame_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:id="@+id/scroll"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/layoutYoutube"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:id="@+id/bottomBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="gravity"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvNumberLike"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/like1"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"
+                            android:text="12k"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tvNumberSeen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:drawableLeft="@drawable/seen"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"
+                            android:text="12k"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/bannerheaderhome" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llHeight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.astuetz.PagerSlidingTabStrip
+                        android:id="@+id/tabs"
+                        app:pstsShouldExpand="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/bannerheaderhome"
+                        app:pstsIndicatorColor="@color/bannerheaderhome"
+                        app:pstsIndicatorHeight="3dp"
+                        app:pstsTabPaddingLeftRight="14dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/frame_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

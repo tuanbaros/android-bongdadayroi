@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "221013154858",
+    "firebase_url": "https://bong-da-day-roi.firebaseio.com",
+    "project_id": "bong-da-day-roi",
+    "storage_bucket": "bong-da-day-roi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221013154858:android:e78d022bbaf4fdfe",
+        "android_client_info": {
+          "package_name": "app.com.bongdadayroi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "221013154858-qv52tvr06nbjk836so8i66e6ig6i7m6k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.com.bongdadayroi",
+            "certificate_hash": "EAD4FC87B1809EB9186D696478BBE3E847CB338C"
+          }
+        },
+        {
+          "client_id": "221013154858-faolr0qd9oa7sqerksepq4t75taehm0k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsMO2RbdZnBDWmUSTQBo9R6A-Fops-y68"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "221013154858-ffmn6hqlt4tmejduvnerfnvhmk06gnk4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "Amb.app.BongDaDayRoi"
+              }
+            },
+            {
+              "client_id": "221013154858-faolr0qd9oa7sqerksepq4t75taehm0k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
