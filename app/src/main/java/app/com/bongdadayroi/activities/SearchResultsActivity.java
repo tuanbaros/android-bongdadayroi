@@ -44,13 +44,9 @@ import app.com.bongdadayroi.utils.NewAPI;
 import vn.amobi.util.ads.AmobiAdView;
 
 public class SearchResultsActivity extends AppCompatActivity implements BannerAdView {
-
     private android.support.v7.app.ActionBar actionBar;
-
     private ProgressBar progressBar;
-
     private ListView listView;
-
     private LinearLayout llTry;
 
     @Override
@@ -59,51 +55,38 @@ public class SearchResultsActivity extends AppCompatActivity implements BannerAd
         VmaxSdk.init(this);
         setContentView(R.layout.activity_search);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+            WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mBannerAdPresenter = new BannerAdPresenter(this);
         setUpAmobiAd();
         setUpVmaxAd();
-
         TFirebaseAnalytics.setAnalytic(this);
-
-
-        if(getSupportActionBar()!=null){
+        if (getSupportActionBar() != null) {
             actionBar = getSupportActionBar();
             setUpActionBar();
         }
-        progressBar = (ProgressBar)findViewById(R.id.progressBar);
-
-        listView = (ListView)findViewById(R.id.lvResult);
-
-        llTry = (LinearLayout)findViewById(R.id.llTry);
-
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        listView = (ListView) findViewById(R.id.lvResult);
+        llTry = (LinearLayout) findViewById(R.id.llTry);
         Button button = (Button) findViewById(R.id.btRetry);
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadResult();
             }
         });
-
         loadResult();
-
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(SearchResultsActivity.this, AdsActivity.class);
-                intent.putExtra("video", (MyVideo)listView.getAdapter().getItem(position));
+                Intent intent = new Intent(SearchResultsActivity.this, EXOMediaActivity.class);
+                intent.putExtra("video", (MyVideo) listView.getAdapter().getItem(position));
                 startActivity(intent);
             }
         });
-
     }
 
     public void loadResult() {
         final String keyword = getIntent().getStringExtra("query");
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -118,7 +101,7 @@ public class SearchResultsActivity extends AppCompatActivity implements BannerAd
     }
 
     private void setUpActionBar() {
-        if(actionBar!=null){
+        if (actionBar != null) {
             actionBar.setTitle("Kết quả tìm kiếm");
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
@@ -133,50 +116,43 @@ public class SearchResultsActivity extends AppCompatActivity implements BannerAd
         return super.onOptionsItemSelected(menuItem);
     }
 
-    private void requestSearch(String keyword){
-
+    private void requestSearch(String keyword) {
         HashMap<String, String> params = new HashMap<>();
         params.put(NewAPI.PARAM_APP_ID, Config.APP_ID);
         params.put(NewAPI.PARAM_TYPE, "search");
         params.put("keyword", keyword);
-
         AndroidNetworking.get(NewAPI.HOST_VIDEO_API)
-                .addQueryParameter(params)
-                .setTag("search")
-                .setPriority(Priority.MEDIUM)
-                .doNotCacheResponse()
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Gson gson = new Gson();
-                        MyData myData = MyData.getInstance();
+            .addQueryParameter(params)
+            .setTag("search")
+            .setPriority(Priority.MEDIUM)
+            .doNotCacheResponse()
+            .build()
+            .getAsJSONObject(new JSONObjectRequestListener() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Gson gson = new Gson();
+                    MyData myData = MyData.getInstance();
+                    Data data = gson.fromJson(response.toString(), Data.class);
+                    ArrayList<MyVideo> arrayList = new ArrayList<>();
+                    Collections.addAll(arrayList, data.getData());
+                    myData.setArrayResult(arrayList);
+                    MyAdapter.getInstance().setMyListAdapter(
+                        new MyListAdapter(SearchResultsActivity.this,
+                            MyData.getInstance().getArrayResult()));
+                    listView.setAdapter(MyAdapter.getInstance().getMyListAdapter());
+                    progressBar.setVisibility(View.GONE);
+                    llTry.setVisibility(View.GONE);
+                    listView.setVisibility(View.VISIBLE);
+                }
 
-                        Data data = gson.fromJson(response.toString(), Data.class);
-
-                        ArrayList<MyVideo> arrayList = new ArrayList<>();
-
-                        Collections.addAll(arrayList, data.getData());
-
-                        myData.setArrayResult(arrayList);
-
-                        MyAdapter.getInstance().setMyListAdapter(new MyListAdapter(SearchResultsActivity.this, MyData.getInstance().getArrayResult()));
-                        listView.setAdapter(MyAdapter.getInstance().getMyListAdapter());
-
-                        progressBar.setVisibility(View.GONE);
-                        llTry.setVisibility(View.GONE);
-                        listView.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    public void onError(ANError ANError) {
-                        progressBar.setVisibility(View.GONE);
-                        llTry.setVisibility(View.VISIBLE);
-                        listView.setVisibility(View.GONE);
-                    }
-                });
+                @Override
+                public void onError(ANError ANError) {
+                    progressBar.setVisibility(View.GONE);
+                    llTry.setVisibility(View.VISIBLE);
+                    listView.setVisibility(View.GONE);
+                }
+            });
     }
-
 
     @Override
     protected void onStop() {
@@ -184,10 +160,8 @@ public class SearchResultsActivity extends AppCompatActivity implements BannerAd
         AndroidNetworking.cancel("search");
     }
 
-    private VmaxAdView mVmaxAdView ;
-
+    private VmaxAdView mVmaxAdView;
     private AmobiAdView mAmobiAdView;
-
     private BannerAdPresenter mBannerAdPresenter;
 
     private void setUpAmobiAd() {
@@ -199,23 +173,21 @@ public class SearchResultsActivity extends AppCompatActivity implements BannerAd
     }
 
     private void setUpVmaxAd() {
-        mVmaxAdView  = (VmaxAdView ) findViewById(R.id.banner_adview);
+        mVmaxAdView = (VmaxAdView) findViewById(R.id.banner_adview);
 //        mVmaxAdView.setLayoutParams(new RelativeLayout.LayoutParams(320, 50));
         HashMap tempAdSettings = new HashMap<>();
-
         tempAdSettings.put(VmaxAdSettings.AdSettings_sbd, VmaxAdSize.AdSize_320x50);
         //Scale is optional to further scale above mentioned size
-
-        mVmaxAdView .setAdSettings(tempAdSettings);
-        mVmaxAdView .setAdListener(mBannerAdPresenter);
+        mVmaxAdView.setAdSettings(tempAdSettings);
+        mVmaxAdView.setAdListener(mBannerAdPresenter);
 //        mVmaxAdView.loadAd();
-        mBannerAdPresenter.loadVmaxAd(mVmaxAdView );
+        mBannerAdPresenter.loadVmaxAd(mVmaxAdView);
     }
 
     @Override
     public void onHadVmaxBanner() {
         mAmobiAdView.setVisibility(View.GONE);
-        mVmaxAdView .setVisibility(View.VISIBLE);
+        mVmaxAdView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -226,7 +198,7 @@ public class SearchResultsActivity extends AppCompatActivity implements BannerAd
 
     @Override
     public void onHadAmobiBanner() {
-        if(mVmaxAdView.getVisibility()==View.GONE){
+        if (mVmaxAdView.getVisibility() == View.GONE) {
             mAmobiAdView.setVisibility(View.VISIBLE);
         }
     }
@@ -245,7 +217,6 @@ public class SearchResultsActivity extends AppCompatActivity implements BannerAd
     @Override
     protected void onPause() {
         if (mVmaxAdView != null) {
-
             mVmaxAdView.onPause();
         }
         super.onPause();
@@ -284,5 +255,4 @@ public class SearchResultsActivity extends AppCompatActivity implements BannerAd
         }
         super.onBackPressed();
     }
-
 }

@@ -26,9 +26,7 @@ import app.com.bongdadayroi.networks.TFirebaseAnalytics;
 import vn.amobi.util.ads.AmobiAdView;
 
 public class BookmarkActivity extends AppCompatActivity implements BannerAdView {
-
     private android.support.v7.app.ActionBar actionBar;
-
     private ListView listView;
 
     @Override
@@ -37,34 +35,28 @@ public class BookmarkActivity extends AppCompatActivity implements BannerAdView 
         VmaxSdk.init(this);
         setContentView(R.layout.activity_bookmark);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+            WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mBannerAdPresenter = new BannerAdPresenter(this);
         setUpAmobiAd();
         setUpVmaxAd();
-
         TFirebaseAnalytics.setAnalytic(this);
-
-        if(getSupportActionBar()!=null){
+        if (getSupportActionBar() != null) {
             actionBar = getSupportActionBar();
             setUpActionBar();
         }
-
-        listView = (ListView)findViewById(R.id.lvResult);
-
+        listView = (ListView) findViewById(R.id.lvResult);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(BookmarkActivity.this, AdsActivity.class);
-                intent.putExtra("video", (MyVideo)listView.getAdapter().getItem(position));
+                Intent intent = new Intent(BookmarkActivity.this, EXOMediaActivity.class);
+                intent.putExtra("video", (MyVideo) listView.getAdapter().getItem(position));
                 startActivity(intent);
             }
         });
     }
 
-
     private void setUpActionBar() {
-        if(actionBar!=null){
+        if (actionBar != null) {
             actionBar.setTitle("Đã lưu");
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
@@ -79,10 +71,8 @@ public class BookmarkActivity extends AppCompatActivity implements BannerAdView 
         return super.onOptionsItemSelected(menuItem);
     }
 
-    private VmaxAdView mVmaxAdView ;
-
+    private VmaxAdView mVmaxAdView;
     private AmobiAdView mAmobiAdView;
-
     private BannerAdPresenter mBannerAdPresenter;
 
     private void setUpAmobiAd() {
@@ -94,23 +84,21 @@ public class BookmarkActivity extends AppCompatActivity implements BannerAdView 
     }
 
     private void setUpVmaxAd() {
-        mVmaxAdView  = (VmaxAdView ) findViewById(R.id.banner_adview);
+        mVmaxAdView = (VmaxAdView) findViewById(R.id.banner_adview);
 //        mVmaxAdView.setLayoutParams(new RelativeLayout.LayoutParams(320, 50));
         HashMap tempAdSettings = new HashMap<>();
-
         tempAdSettings.put(VmaxAdSettings.AdSettings_sbd, VmaxAdSize.AdSize_320x50);
         //Scale is optional to further scale above mentioned size
-
-        mVmaxAdView .setAdSettings(tempAdSettings);
-        mVmaxAdView .setAdListener(mBannerAdPresenter);
+        mVmaxAdView.setAdSettings(tempAdSettings);
+        mVmaxAdView.setAdListener(mBannerAdPresenter);
 //        mVmaxAdView.loadAd();
-        mBannerAdPresenter.loadVmaxAd(mVmaxAdView );
+        mBannerAdPresenter.loadVmaxAd(mVmaxAdView);
     }
 
     @Override
     public void onHadVmaxBanner() {
         mAmobiAdView.setVisibility(View.GONE);
-        mVmaxAdView .setVisibility(View.VISIBLE);
+        mVmaxAdView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -121,7 +109,7 @@ public class BookmarkActivity extends AppCompatActivity implements BannerAdView 
 
     @Override
     public void onHadAmobiBanner() {
-        if(mVmaxAdView.getVisibility()==View.GONE){
+        if (mVmaxAdView.getVisibility() == View.GONE) {
             mAmobiAdView.setVisibility(View.VISIBLE);
         }
     }
@@ -140,7 +128,6 @@ public class BookmarkActivity extends AppCompatActivity implements BannerAdView 
     @Override
     protected void onPause() {
         if (mVmaxAdView != null) {
-
             mVmaxAdView.onPause();
         }
         super.onPause();

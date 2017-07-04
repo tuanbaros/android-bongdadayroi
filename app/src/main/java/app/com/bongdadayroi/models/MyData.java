@@ -6,12 +6,9 @@ import java.util.ArrayList;
 /**
  * Created by tuan on 28/03/2016.
  */
-public class MyData implements Serializable{
-
+public class MyData implements Serializable {
     public static volatile MyData myData = null;
-
     private ArrayList<MyVideo> arrayHome, arrayNew, arrayMost, arrayResult;
-
     private ArrayList<ArrayList<MyVideo>> arrayListData = new ArrayList<ArrayList<MyVideo>>();
 
     public ArrayList<ArrayList<MyVideo>> getArrayListData() {
@@ -73,19 +70,17 @@ public class MyData implements Serializable{
         this.arrayMost = arrayMost;
     }
 
-    private MyData(){}
-
+    private MyData() {
+    }
 
     public static MyData getInstance() {
-        if (myData == null ) {
+        if (myData == null) {
             synchronized (MyData.class) {
                 if (myData == null) {
                     myData = new MyData();
                 }
             }
         }
-
         return myData;
     }
-
 }

@@ -13,20 +13,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="#ffffff"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/Rlayout_fb"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginTop="20dp" >
+            android:layout_marginTop="20dp">
 
             <ImageView
                 android:id="@+id/imgfb"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/share_face" />
+                android:src="@drawable/share_face"/>
 
             <TextView
                 android:id="@+id/tv1"
@@ -35,21 +35,21 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/imgfb"
-                android:text="Đăng lên Facebook" />
+                android:text="Đăng lên Facebook"/>
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/Rlayout_tw"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginTop="6dp" >
+            android:layout_marginTop="6dp">
 
             <ImageView
                 android:id="@+id/imgtw"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/share_tweet" />
+                android:src="@drawable/share_tweet"/>
 
             <TextView
                 android:id="@+id/tv2"
@@ -58,21 +58,21 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/imgtw"
-                android:text="Đăng lên Twitter" />
+                android:text="Đăng lên Twitter"/>
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/Rlayout_gg"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginTop="6dp" >
+            android:layout_marginTop="6dp">
 
             <ImageView
                 android:id="@+id/imggg"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/share_gg" />
+                android:src="@drawable/share_gg"/>
 
             <TextView
                 android:id="@+id/tv3"
@@ -81,21 +81,21 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/imggg"
-                android:text="Google Plus" />
+                android:text="Google Plus"/>
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/Rlayout_mail"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginTop="6dp" >
+            android:layout_marginTop="6dp">
 
             <ImageView
                 android:id="@+id/imgmail"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/share_mail" />
+                android:src="@drawable/share_mail"/>
 
             <TextView
                 android:id="@+id/tv5"
@@ -104,21 +104,21 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/imgmail"
-                android:text="Gửi qua mail" />
+                android:text="Gửi qua mail"/>
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/Rlayout_sms"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginTop="6dp" >
+            android:layout_marginTop="6dp">
 
             <ImageView
                 android:id="@+id/imgsms"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/share_sms" />
+                android:src="@drawable/share_sms"/>
 
             <TextView
                 android:id="@+id/tv6"
@@ -127,21 +127,21 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/imgsms"
-                android:text="Chia sẻ qua SMS" />
+                android:text="Chia sẻ qua SMS"/>
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/Rlayout_web"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginTop="6dp" >
+            android:layout_marginTop="6dp">
 
             <ImageView
                 android:id="@+id/imgweb"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/share_safari" />
+                android:src="@drawable/share_safari"/>
 
             <TextView
                 android:id="@+id/tv7"
@@ -150,21 +150,21 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/imgweb"
-                android:text="Mở bằng trình duyệt" />
+                android:text="Mở bằng trình duyệt"/>
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/Rlayout_link"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginTop="6dp" >
+            android:layout_marginTop="6dp">
 
             <ImageView
                 android:id="@+id/imglink"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/share_link" />
+                android:src="@drawable/share_link"/>
 
             <TextView
                 android:id="@+id/tv8"
@@ -173,14 +173,14 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/imglink"
-                android:text="Sao chép link" />
+                android:text="Sao chép link"/>
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/Rlayout_khac"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginTop="6dp" >
+            android:layout_marginTop="6dp">
 
             <TextView
                 android:id="@+id/tv9"
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="60dp"
-                android:text="Khác" />
+                android:text="Khác"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -196,7 +196,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="6dp" >
+            android:layout_marginTop="6dp">
 
             <TextView
                 android:id="@+id/textView3"
@@ -205,7 +205,7 @@
                 android:layout_marginLeft="60dp"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:text="Đóng" />
+                android:text="Đóng"/>
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

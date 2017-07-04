@@ -5,7 +5,7 @@
     <gradient
         android:centerColor="@color/vmax_cta_not_selected"
         android:endColor="@color/vmax_cta_not_selected"
-        android:startColor="@color/vmax_cta_not_selected" />
+        android:startColor="@color/vmax_cta_not_selected"/>
 
 
 </shape>

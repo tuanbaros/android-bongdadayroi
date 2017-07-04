@@ -51,23 +51,18 @@ import app.com.bongdadayroi.views.MyImage;
 import vn.amobi.util.ads.AmobiAdView;
 
 public class AccountActivity extends AppCompatActivity implements GetInfoAccount,
-        BannerAdView {
-
+    BannerAdView {
     private ActionBar actionBar;
-
     private MyImage myImage;
-
     private TextView tvName;
-
     private CallbackManager callbackManager;
-
     private Button btLogin;
-
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
         @Override
         public void onSuccess(LoginResult loginResult) {
             AccessToken accessToken = loginResult.getAccessToken();
-            MyRequest.requestGetToken(getApplicationContext(), "" + accessToken.getToken(), AccountActivity.this);
+            MyRequest.requestGetToken(getApplicationContext(), "" + accessToken.getToken(),
+                AccountActivity.this);
             Profile profile = Profile.getCurrentProfile();
             FacebookUser facebookUser = FacebookUser.getInstance();
             facebookUser.setInformation(profile);
@@ -91,20 +86,16 @@ public class AccountActivity extends AppCompatActivity implements GetInfoAccount
         super.onCreate(savedInstanceState);
         VmaxSdk.init(this);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_account);
-
         mBannerAdPresenter = new BannerAdPresenter(this);
         setUpAmobiAd();
         setUpVmaxAd();
-
         if (getSupportActionBar() != null) {
             actionBar = getSupportActionBar();
             setUpActionBar();
         }
-
         setUpView();
-
         TFirebaseAnalytics.setAnalytic(this);
     }
 
@@ -117,28 +108,26 @@ public class AccountActivity extends AppCompatActivity implements GetInfoAccount
         }
         tvName = (TextView) findViewById(R.id.tvName);
         callbackManager = CallbackManager.Factory.create();
-
-        btLogin = (Button)findViewById(R.id.login_button);
-        if(AccessToken.getCurrentAccessToken()!=null){
+        btLogin = (Button) findViewById(R.id.login_button);
+        if (AccessToken.getCurrentAccessToken() != null) {
             btLogin.setText(R.string.dang_xuat_facebook);
-        }else{
+        } else {
             btLogin.setText(R.string.dang_nhap_facebook);
         }
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(btLogin.getText().toString().equals("Đăng nhập với Facebook")){
+                if (btLogin.getText().toString().equals("Đăng nhập với Facebook")) {
                     LoginManager.getInstance().registerCallback(callbackManager, callback);
-                    LoginManager.getInstance().logInWithReadPermissions(AccountActivity.this, Arrays.asList("public_profile", "user_friends"));
+                    LoginManager.getInstance().logInWithReadPermissions(AccountActivity.this,
+                        Arrays.asList("public_profile", "user_friends"));
                     btLogin.setText(R.string.dang_xuat_facebook);
-                }else{
+                } else {
                     logout();
                     LoginManager.getInstance().logOut();
                 }
-
             }
         });
-
     }
 
     private void setUpActionBar() {
@@ -176,37 +165,32 @@ public class AccountActivity extends AppCompatActivity implements GetInfoAccount
     }
 
     private void logout() {
-
         final FacebookUser facebookUser = FacebookUser.getInstance();
-
         HashMap<String, String> params = new HashMap<>();
         params.put("app_id", Config.APP_ID);
-
         AndroidNetworking.post(API.LOGOUT)
-                .addHeaders("Cookie", "user_token=" + facebookUser.getAuth_token())
-                .addQueryParameter(params)
-                .setPriority(Priority.MEDIUM)
-                .doNotCacheResponse()
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        setViewGone();
-                    }
+            .addHeaders("Cookie", "user_token=" + facebookUser.getAuth_token())
+            .addQueryParameter(params)
+            .setPriority(Priority.MEDIUM)
+            .doNotCacheResponse()
+            .build()
+            .getAsJSONObject(new JSONObjectRequestListener() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    setViewGone();
+                }
 
-                    @Override
-                    public void onError(ANError ANError) {
-
-                    }
-                });
-        final Handler myHandler = new Handler(Looper.myLooper()){
+                @Override
+                public void onError(ANError ANError) {
+                }
+            });
+        final Handler myHandler = new Handler(Looper.myLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 setViewGone();
             }
         };
-
     }
 
     private void setViewGone() {
@@ -217,10 +201,8 @@ public class AccountActivity extends AppCompatActivity implements GetInfoAccount
         facebookUser.reset();
     }
 
-    private VmaxAdView mVmaxAdView ;
-
+    private VmaxAdView mVmaxAdView;
     private AmobiAdView mAmobiAdView;
-
     private BannerAdPresenter mBannerAdPresenter;
 
     private void setUpAmobiAd() {
@@ -232,23 +214,21 @@ public class AccountActivity extends AppCompatActivity implements GetInfoAccount
     }
 
     private void setUpVmaxAd() {
-        mVmaxAdView  = (VmaxAdView ) findViewById(R.id.banner_adview);
+        mVmaxAdView = (VmaxAdView) findViewById(R.id.banner_adview);
 //        mVmaxAdView.setLayoutParams(new RelativeLayout.LayoutParams(320, 50));
         HashMap tempAdSettings = new HashMap<>();
-
         tempAdSettings.put(VmaxAdSettings.AdSettings_sbd, VmaxAdSize.AdSize_320x50);
         //Scale is optional to further scale above mentioned size
-
-        mVmaxAdView .setAdSettings(tempAdSettings);
-        mVmaxAdView .setAdListener(mBannerAdPresenter);
+        mVmaxAdView.setAdSettings(tempAdSettings);
+        mVmaxAdView.setAdListener(mBannerAdPresenter);
 //        mVmaxAdView.loadAd();
-        mBannerAdPresenter.loadVmaxAd(mVmaxAdView );
+        mBannerAdPresenter.loadVmaxAd(mVmaxAdView);
     }
 
     @Override
     public void onHadVmaxBanner() {
         mAmobiAdView.setVisibility(View.GONE);
-        mVmaxAdView .setVisibility(View.VISIBLE);
+        mVmaxAdView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -259,7 +239,7 @@ public class AccountActivity extends AppCompatActivity implements GetInfoAccount
 
     @Override
     public void onHadAmobiBanner() {
-        if(mVmaxAdView.getVisibility()==View.GONE){
+        if (mVmaxAdView.getVisibility() == View.GONE) {
             mAmobiAdView.setVisibility(View.VISIBLE);
         }
     }
@@ -278,7 +258,6 @@ public class AccountActivity extends AppCompatActivity implements GetInfoAccount
     @Override
     protected void onPause() {
         if (mVmaxAdView != null) {
-
             mVmaxAdView.onPause();
         }
         super.onPause();
@@ -292,9 +271,9 @@ public class AccountActivity extends AppCompatActivity implements GetInfoAccount
         }
         AppEventsLogger.activateApp(this);
         Profile profile = Profile.getCurrentProfile();
-        if(profile!=null){
+        if (profile != null) {
             this.showInfoUser();
-        }else{
+        } else {
             FacebookUser facebookUser = FacebookUser.getInstance();
             facebookUser.reset();
         }

@@ -22,7 +22,7 @@
                     android:startColor="#FFFFFF"
                     android:type="sweep"
                     android:useLevel="true"
-                   />
+                    />
             </shape>
 
 

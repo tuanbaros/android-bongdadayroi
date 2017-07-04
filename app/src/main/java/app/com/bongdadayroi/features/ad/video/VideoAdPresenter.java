@@ -3,13 +3,8 @@ package app.com.bongdadayroi.features.ad.video;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.vmax.android.ads.api.VmaxAdSettings;
-import com.vmax.android.ads.api.VmaxAdSize;
 import com.vmax.android.ads.api.VmaxAdView;
 import com.vmax.android.ads.common.VmaxAdListener;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import app.com.bongdadayroi.myapp.Config;
 import vn.amobi.util.ads.video.AmobiVideoAd;
@@ -19,21 +14,21 @@ import vn.amobi.util.ads.video.AmobiVideoAdListener;
  * Created by Tuan on 8/15/2016.
  */
 public class VideoAdPresenter
-        implements AmobiVideoAdListener {
-
+    implements AmobiVideoAdListener {
     private VideoAdView mVideoAdView;
 
-    public VideoAdPresenter(VideoAdView videoAdView){
+    public VideoAdPresenter(VideoAdView videoAdView) {
         mVideoAdView = videoAdView;
     }
 
-    public void loadAmobiVideoAd(){
+    public void loadAmobiVideoAd() {
         AmobiVideoAd.getInstance().setVideoAdListener(this);
     }
 
-    public void loadVmaxVideoAd(final FrameLayout aVideoAdFrameLayout){
-        final VmaxAdView vmaxAdView = new VmaxAdView(aVideoAdFrameLayout.getContext(), Config.VIDEO_ADSPOTID, VmaxAdView.UX_INTERSTITIAL);
-
+    public void loadVmaxVideoAd(final FrameLayout aVideoAdFrameLayout) {
+        final VmaxAdView vmaxAdView =
+            new VmaxAdView(aVideoAdFrameLayout.getContext(), Config.VIDEO_ADSPOTID,
+                VmaxAdView.UX_INTERSTITIAL);
         vmaxAdView.setAdListener(new VmaxAdListener() {
             @Override
             public VmaxAdView didFailedToLoadAd(String s) {
@@ -57,7 +52,6 @@ public class VideoAdPresenter
 
             @Override
             public void adViewDidCacheAd(VmaxAdView adView) {
-
             }
 
             @Override
@@ -73,7 +67,6 @@ public class VideoAdPresenter
             @Override
             public void willPresentAd(VmaxAdView adView) {
                 aVideoAdFrameLayout.setVisibility(View.VISIBLE);
-
             }
 
             @Override
@@ -82,20 +75,15 @@ public class VideoAdPresenter
 
             @Override
             public void onVideoView(boolean b, int i, int i1) {
-
             }
 
             @Override
             public void onAdExpand() {
-
             }
 
             @Override
             public void onAdCollapsed() {
-
             }
-
-
         });
         vmaxAdView.cacheAd();
     }
@@ -112,7 +100,6 @@ public class VideoAdPresenter
 
     @Override
     public void onAdStarted() {
-
     }
 
     @Override

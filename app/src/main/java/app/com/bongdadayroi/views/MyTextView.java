@@ -10,7 +10,7 @@ import app.com.bongdadayroi.myapp.ScreenSize;
 /**
  * Created by tuan on 07/04/2016.
  */
-public class MyTextView extends TextView{
+public class MyTextView extends TextView {
     public MyTextView(Context context) {
         super(context);
     }
@@ -26,6 +26,6 @@ public class MyTextView extends TextView{
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(ScreenSize.WIDTH*3/7, WindowManager.LayoutParams.WRAP_CONTENT);
+        setMeasuredDimension(ScreenSize.WIDTH * 3 / 7, WindowManager.LayoutParams.WRAP_CONTENT);
     }
 }

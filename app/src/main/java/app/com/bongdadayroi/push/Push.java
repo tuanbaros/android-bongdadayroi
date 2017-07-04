@@ -19,19 +19,14 @@ import app.com.bongdadayroi.myapp.Config;
  * Created by tuan on 31/12/2015.
  */
 public class Push {
-
     @SerializedName("post_id")
     private String post_id;
-
     @SerializedName("title")
     private String title;
-
     @SerializedName("des")
     private String des;
-
     @SerializedName("data")
     private MyVideo data;
-
     @SerializedName("option")
     private String option;
 
@@ -75,13 +70,13 @@ public class Push {
         this.des = des;
     }
 
-    public static void registerPush (final Context context){
+    public static void registerPush(final Context context) {
         MainActivity mainActivity = new MainActivity();
         MyHandler.mainActivity = mainActivity;
         NotificationsManager.handleNotifications(context, Config.SENDER_ID, MyHandler.class);
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(context);
-        final NotificationHub hub = new NotificationHub(Config.HUB_NAME, Config.HUB_LISTEN_CONNECTION_STRING, context);
-
+        final NotificationHub hub =
+            new NotificationHub(Config.HUB_NAME, Config.HUB_LISTEN_CONNECTION_STRING, context);
         new Thread(new Runnable() {
             @Override
             public void run() {

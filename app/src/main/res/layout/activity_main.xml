@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -21,19 +20,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include
-                layout="@layout/ads_banner_layout"
-                android:id="@+id/adsBannerLinearLayout"
-                android:layout_alignParentBottom="true"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"/>
+            <!--<include-->
+                <!--layout="@layout/ads_banner_layout"-->
+                <!--android:id="@+id/adsBannerLinearLayout"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_width="match_parent"/>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_above="@+id/adsBannerLinearLayout"
-                >
+                android:orientation="vertical">
 
                 <include
                     layout="@layout/app_bar"
@@ -48,8 +45,8 @@
                 </FrameLayout>
 
 
-
             </LinearLayout>
+
             <include layout="@layout/frame_share"/>
 
         </RelativeLayout>
@@ -60,7 +57,6 @@
 
 
     </android.support.v4.widget.DrawerLayout>
-
 
 
 </LinearLayout>

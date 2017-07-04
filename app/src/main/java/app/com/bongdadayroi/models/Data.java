@@ -7,8 +7,7 @@ import java.io.Serializable;
 /**
  * Created by tuan on 28/03/2016.
  */
-public class Data implements Serializable{
-
+public class Data implements Serializable {
     @SerializedName("data")
     private MyVideo[] data;
 

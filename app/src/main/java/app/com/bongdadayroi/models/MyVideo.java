@@ -8,43 +8,30 @@ import java.io.Serializable;
  * Created by tuan on 28/03/2016.
  */
 public class MyVideo implements Serializable {
-
     @SerializedName("post_id")
     private String post_id;
-
     @SerializedName("title")
     private String title;
-
     @SerializedName("avatar")
     private String avatar;
-
     @SerializedName("avatar_medium")
     private String avatar_medium;
-
     @SerializedName("description")
     private String description;
-
     @SerializedName("link")
     private String link;
-
     @SerializedName("author")
     private String author;
-
     @SerializedName("category_name")
     private String category_name;
-
     @SerializedName("num_view")
     private String num_view;
-
     @SerializedName("num_like")
     private String num_like;
-
     @SerializedName("video_url")
     private String video_url;
-
     @SerializedName("list_video")
     private ListVideo[] list_video;
-
     @SerializedName("link_streamming")
     private String[] link_streamming;
 

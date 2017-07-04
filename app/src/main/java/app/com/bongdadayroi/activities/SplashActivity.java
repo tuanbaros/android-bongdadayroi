@@ -25,30 +25,24 @@ import app.com.bongdadayroi.push.PushActivity;
 import bolts.AppLinks;
 
 public class SplashActivity extends AppCompatActivity implements
-        SplashError{
-
+    SplashError {
     private ProgressBar progressBar;
-
     private LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
-
         TFirebaseAnalytics.setAnalytic(this);
-
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         ScreenSize.HEIGHT = displaymetrics.heightPixels;
         ScreenSize.WIDTH = displaymetrics.widthPixels;
-
-        progressBar = (ProgressBar)findViewById(R.id.progressBar);
-        linearLayout = (LinearLayout)findViewById(R.id.llTry);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        linearLayout = (LinearLayout) findViewById(R.id.llTry);
         Button button = (Button) findViewById(R.id.btRetry);
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,64 +51,58 @@ public class SplashActivity extends AppCompatActivity implements
                 getData(SplashActivity.this);
                 AccessToken accessToken = AccessToken.getCurrentAccessToken();
                 Profile profile = Profile.getCurrentProfile();
-                if(accessToken!=null){
+                if (accessToken != null) {
                     Log.i("token", "mytoken: " + accessToken.getToken());
-                    MyRequest.requestGetToken(getApplicationContext(), accessToken.getToken(), null);
-                    if(profile!=null){
+                    MyRequest
+                        .requestGetToken(getApplicationContext(), accessToken.getToken(), null);
+                    if (profile != null) {
                         FacebookUser facebookUser = FacebookUser.getInstance();
                         facebookUser.setInformation(profile);
                     }
                 }
             }
         });
-
         Uri targetUrl =
-                AppLinks.getTargetUrlFromInboundIntent(this, getIntent());
+            AppLinks.getTargetUrlFromInboundIntent(this, getIntent());
         if (targetUrl != null) {
             Log.i("Activity", "App Link Target URL: " + targetUrl.toString());
             String url = targetUrl.toString();
-            int start = url.lastIndexOf("-")+2;
+            int start = url.lastIndexOf("-") + 2;
             int end = url.lastIndexOf(".");
             String post_id = url.substring(start, end);
-            if (post_id!=null&&!post_id.equals("")&&isInteger(post_id)){
+            if (post_id != null && !post_id.equals("") && isInteger(post_id)) {
                 Intent intent = new Intent(this, PushActivity.class);
                 intent.putExtra("post_id", post_id);
                 startActivity(intent);
                 finish();
-            }else{
+            } else {
                 getData(this);
             }
-            Log.i("uri", "uri: "+ post_id);
-        }else {
+            Log.i("uri", "uri: " + post_id);
+        } else {
             getData(this);
         }
-        
     }
 
-    public void getData(SplashError splashError){
-        synchronized (MyRequest.class){
+    public void getData(SplashError splashError) {
+        synchronized (MyRequest.class) {
             MyRequest.requestHomeAPI(this, splashError);
         }
     }
 
-
-
-
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         Profile profile = Profile.getCurrentProfile();
-        if(accessToken!=null){
+        if (accessToken != null) {
             Log.i("token", "mytoken: " + accessToken.getToken());
             MyRequest.requestGetToken(getApplicationContext(), accessToken.getToken(), null);
-            if(profile!=null){
+            if (profile != null) {
                 FacebookUser facebookUser = FacebookUser.getInstance();
                 facebookUser.setInformation(profile);
             }
         }
-
-
     }
 
     @Override
@@ -126,9 +114,9 @@ public class SplashActivity extends AppCompatActivity implements
     private boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return false;
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             return false;
         }
         // only got here if we didn't return false

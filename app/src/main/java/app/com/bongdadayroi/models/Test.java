@@ -7,8 +7,7 @@ import java.io.Serializable;
 /**
  * Created by tuan on 27/03/2016.
  */
-public class Test implements Serializable{
-
+public class Test implements Serializable {
     @SerializedName("data")
     private CategoryItem[] data;
 

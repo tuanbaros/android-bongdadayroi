@@ -8,26 +8,24 @@ import com.vmax.android.ads.common.VmaxAdListener;
 import app.com.bongdadayroi.myapp.Config;
 import vn.amobi.util.ads.AdEventInterface;
 import vn.amobi.util.ads.AmobiAdView;
-import vn.amobi.util.ads.video.AmobiVideoAd;
 
 /**
  * Created by tuan on 09/08/2016.
  */
 public class BannerAdPresenter extends VmaxAdListener
-        implements AdEventInterface {
-
+    implements AdEventInterface {
     private BannerAdView mBannerAdView;
 
     public BannerAdPresenter(BannerAdView bannerAdView) {
         mBannerAdView = bannerAdView;
     }
 
-    public void loadAmobiAd(AmobiAdView amobiAdView, AmobiAdView.WidgetSize widgetSize){
+    public void loadAmobiAd(AmobiAdView amobiAdView, AmobiAdView.WidgetSize widgetSize) {
         amobiAdView.setEventListener(this);
         amobiAdView.loadAd(widgetSize);
     }
 
-    public void loadVmaxAd(VmaxAdView vmaxAdView){
+    public void loadVmaxAd(VmaxAdView vmaxAdView) {
         vmaxAdView.setAdSpotId(Config.BANNER_ADSPOTID);
         Log.i("AdSpotId", "AdSpotId: " + vmaxAdView.getAdSpotId());
         vmaxAdView.loadAd();
@@ -47,7 +45,6 @@ public class BannerAdPresenter extends VmaxAdListener
     public void onLoadAdError(ErrorCode errorCode) {
         mBannerAdView.onNoAmobiBanner();
     }
-
 
     @Override
     public VmaxAdView didFailedToLoadAd(String s) {
@@ -83,7 +80,6 @@ public class BannerAdPresenter extends VmaxAdListener
 
     @Override
     public void willPresentAd(VmaxAdView adView) {
-
     }
 
     @Override
@@ -92,12 +88,10 @@ public class BannerAdPresenter extends VmaxAdListener
 
     @Override
     public void onVideoView(boolean b, int i, int i1) {
-
     }
 
     @Override
     public void onAdExpand() {
-
     }
 
     @Override

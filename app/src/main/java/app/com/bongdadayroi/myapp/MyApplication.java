@@ -5,7 +5,6 @@ import android.content.Context;
 
 import com.androidnetworking.AndroidNetworking;
 import com.facebook.FacebookSdk;
-import com.vmax.android.ads.api.VmaxSdk;
 
 import java.io.File;
 
@@ -13,17 +12,12 @@ import java.io.File;
  * Created by tuan on 02/04/2016.
  */
 public class MyApplication extends Application {
-
     @Override
     public void onCreate() {
         super.onCreate();
-
         FacebookSdk.setApplicationId(Config.APP_ID);
-
         FacebookSdk.sdkInitialize(getApplicationContext());
-
         AndroidNetworking.initialize(getApplicationContext());
-
     }
 
     public static void deleteCache(Context context) {
@@ -48,5 +42,4 @@ public class MyApplication extends Application {
         } else
             return dir != null && dir.isFile() && dir.delete();
     }
-
 }

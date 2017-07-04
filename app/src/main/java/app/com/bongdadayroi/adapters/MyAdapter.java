@@ -4,15 +4,13 @@ package app.com.bongdadayroi.adapters;
  * Created by tuan on 27/03/2016.
  */
 public class MyAdapter {
-
     public static volatile MyAdapter myAdapter = null;
 
-    private MyAdapter(){}
+    private MyAdapter() {
+    }
 
     TWVAdapter newAdapter, mostAdapter;
-
     MyListAdapter myListAdapter;
-
     CommentAdapter commentAdapter;
 
     public CommentAdapter getCommentAdapter() {
@@ -48,17 +46,13 @@ public class MyAdapter {
     }
 
     public static MyAdapter getInstance() {
-        if (myAdapter == null ) {
+        if (myAdapter == null) {
             synchronized (MyAdapter.class) {
                 if (myAdapter == null) {
                     myAdapter = new MyAdapter();
                 }
             }
         }
-
         return myAdapter;
     }
-
-
-
 }

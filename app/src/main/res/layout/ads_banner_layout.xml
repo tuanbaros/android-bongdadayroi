@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
 
     <View
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
             android:gravity="center"
             android:visibility="visible"
             app:vmax_UX_type="5"
-            app:vmax_adspot_id="cb9e24d8" />
+            app:vmax_adspot_id="cb9e24d8"/>
 
 
         <vn.amobi.util.ads.AmobiAdView
@@ -45,7 +45,6 @@
             />
 
     </RelativeLayout>
-
 
 
 </LinearLayout>

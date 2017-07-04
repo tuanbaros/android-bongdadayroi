@@ -2,7 +2,6 @@ package app.com.bongdadayroi.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 import com.androidnetworking.widget.ANImageView;
 
@@ -10,7 +9,6 @@ import com.androidnetworking.widget.ANImageView;
  * Created by tuan on 24/03/2016.
  */
 public class MyImage extends ANImageView {
-
     private int myWidth, myHeight;
 
     public int getMyWidth() {
@@ -29,7 +27,7 @@ public class MyImage extends ANImageView {
         this.myHeight = myHeight;
     }
 
-    public void setSize(){
+    public void setSize() {
         measure(myWidth, myHeight);
     }
 

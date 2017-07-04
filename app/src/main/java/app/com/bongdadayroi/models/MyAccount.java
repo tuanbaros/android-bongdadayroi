@@ -1,22 +1,19 @@
 package app.com.bongdadayroi.models;
 
-import java.io.Serializable;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 /**
  * Created by tuan on 02/04/2016.
  */
 public class MyAccount implements Serializable {
-
     @SerializedName("success")
     private String success;
-
     @SerializedName("info")
     private String info;
-
     @SerializedName("token")
     private String token;
-
     @SerializedName("user_id")
     private String user_id;
 

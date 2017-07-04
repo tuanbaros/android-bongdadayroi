@@ -1,7 +1,7 @@
 package app.com.bongdadayroi.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -14,7 +14,6 @@ import android.widget.ProgressBar;
 import app.com.bongdadayroi.R;
 
 public class WebStreamActivity extends AppCompatActivity {
-
     WebView myWebView;
 
     @Override
@@ -22,8 +21,7 @@ public class WebStreamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_stream);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+            WindowManager.LayoutParams.FLAG_FULLSCREEN);
         myWebView = (WebView) findViewById(R.id.webview);
         if (myWebView != null) {
             Log.i("link-stream", "link-stream" + getIntent().getStringExtra("video"));
@@ -35,15 +33,13 @@ public class WebStreamActivity extends AppCompatActivity {
         myWebView.post(new Runnable() {
             @Override
             public void run() {
-                ProgressBar progressBar = (ProgressBar)findViewById(R.id.progress_bar);
+                ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
                 if (progressBar != null) {
                     progressBar.setVisibility(View.GONE);
                 }
             }
         });
-
     }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

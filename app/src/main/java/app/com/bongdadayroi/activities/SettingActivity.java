@@ -1,8 +1,8 @@
 package app.com.bongdadayroi.activities;
 
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,7 +23,6 @@ import app.com.bongdadayroi.networks.TFirebaseAnalytics;
 import vn.amobi.util.ads.AmobiAdView;
 
 public class SettingActivity extends AppCompatActivity implements BannerAdView {
-
     private ActionBar actionBar;
 
     @Override
@@ -31,25 +30,21 @@ public class SettingActivity extends AppCompatActivity implements BannerAdView {
         super.onCreate(savedInstanceState);
         VmaxSdk.init(this);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_setting);
-
         mBannerAdPresenter = new BannerAdPresenter(this);
         setUpAmobiAd();
         setUpVmaxAd();
-
         if (getSupportActionBar() != null) {
             actionBar = getSupportActionBar();
             setUpActionBar();
         }
-
         setUpListView();
-
         TFirebaseAnalytics.setAnalytic(this);
     }
 
     private void setUpListView() {
-        ListView list = (ListView)findViewById(R.id.listview);
+        ListView list = (ListView) findViewById(R.id.listview);
         list.setAdapter(new SettingAdapter(this));
     }
 
@@ -69,10 +64,8 @@ public class SettingActivity extends AppCompatActivity implements BannerAdView {
         return super.onOptionsItemSelected(menuItem);
     }
 
-    private VmaxAdView mVmaxAdView ;
-
+    private VmaxAdView mVmaxAdView;
     private AmobiAdView mAmobiAdView;
-
     private BannerAdPresenter mBannerAdPresenter;
 
     private void setUpAmobiAd() {
@@ -84,23 +77,21 @@ public class SettingActivity extends AppCompatActivity implements BannerAdView {
     }
 
     private void setUpVmaxAd() {
-        mVmaxAdView  = (VmaxAdView ) findViewById(R.id.banner_adview);
+        mVmaxAdView = (VmaxAdView) findViewById(R.id.banner_adview);
 //        mVmaxAdView.setLayoutParams(new RelativeLayout.LayoutParams(320, 50));
         HashMap tempAdSettings = new HashMap<>();
-
         tempAdSettings.put(VmaxAdSettings.AdSettings_sbd, VmaxAdSize.AdSize_320x50);
         //Scale is optional to further scale above mentioned size
-
-        mVmaxAdView .setAdSettings(tempAdSettings);
-        mVmaxAdView .setAdListener(mBannerAdPresenter);
+        mVmaxAdView.setAdSettings(tempAdSettings);
+        mVmaxAdView.setAdListener(mBannerAdPresenter);
 //        mVmaxAdView.loadAd();
-        mBannerAdPresenter.loadVmaxAd(mVmaxAdView );
+        mBannerAdPresenter.loadVmaxAd(mVmaxAdView);
     }
 
     @Override
     public void onHadVmaxBanner() {
         mAmobiAdView.setVisibility(View.GONE);
-        mVmaxAdView .setVisibility(View.VISIBLE);
+        mVmaxAdView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -111,7 +102,7 @@ public class SettingActivity extends AppCompatActivity implements BannerAdView {
 
     @Override
     public void onHadAmobiBanner() {
-        if(mVmaxAdView.getVisibility()==View.GONE){
+        if (mVmaxAdView.getVisibility() == View.GONE) {
             mAmobiAdView.setVisibility(View.VISIBLE);
         }
     }
@@ -130,7 +121,6 @@ public class SettingActivity extends AppCompatActivity implements BannerAdView {
     @Override
     protected void onPause() {
         if (mVmaxAdView != null) {
-
             mVmaxAdView.onPause();
         }
         super.onPause();

@@ -8,6 +8,5 @@ public interface VideoAdView {
     void onNoVmaxVideo();
     void onHadAmobiVideo();
     void onNoAmobiVideo();
-
     void onVideoAdFinish();
 }

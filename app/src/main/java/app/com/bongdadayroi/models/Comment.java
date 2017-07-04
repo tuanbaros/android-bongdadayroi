@@ -1,22 +1,19 @@
 package app.com.bongdadayroi.models;
 
-import java.io.Serializable;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 /**
  * Created by tuan on 05/04/2016.
  */
-public class Comment implements Serializable{
-
+public class Comment implements Serializable {
     @SerializedName("content")
     private String content;
-
     @SerializedName("date")
     private String date;
-
     @SerializedName("avatar")
     private String avatar;
-
     @SerializedName("user_name")
     private String user_name;
 

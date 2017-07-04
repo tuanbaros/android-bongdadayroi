@@ -7,11 +7,9 @@ import java.io.Serializable;
 /**
  * Created by tuan on 05/04/2016.
  */
-public class MyComment implements Serializable{
-
+public class MyComment implements Serializable {
     @SerializedName("success")
     private String success;
-
     @SerializedName("info")
     private Comment[] info;
 

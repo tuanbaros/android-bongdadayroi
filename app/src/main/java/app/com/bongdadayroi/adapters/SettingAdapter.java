@@ -17,14 +17,11 @@ import app.com.bongdadayroi.R;
  * Created by Nguyen Thanh Tuan on 30/04/2016.
  */
 public class SettingAdapter extends BaseAdapter {
-
     private AppCompatActivity appCompatActivity;
-
     private String[] nameSetting;
-
     private LayoutInflater layoutInflater;
 
-    public SettingAdapter(AppCompatActivity appCompatActivity){
+    public SettingAdapter(AppCompatActivity appCompatActivity) {
         this.appCompatActivity = appCompatActivity;
         layoutInflater = LayoutInflater.from(this.appCompatActivity);
         Resources res = appCompatActivity.getResources();
@@ -46,7 +43,6 @@ public class SettingAdapter extends BaseAdapter {
         return position;
     }
 
-
     @Override
     public int getViewTypeCount() {
         return 2;
@@ -55,29 +51,29 @@ public class SettingAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         convertView = layoutInflater.inflate(R.layout.item_setting_list, parent, false);
-        TextView tvName = (TextView)convertView.findViewById(R.id.tvName);
-        final ImageView ivSwitch = (ImageView)convertView.findViewById(R.id.ivSwitch);
+        TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
+        final ImageView ivSwitch = (ImageView) convertView.findViewById(R.id.ivSwitch);
         tvName.setText(nameSetting[position]);
         SharedPreferences sharedPreferences = appCompatActivity.getSharedPreferences(
-                "tuannt", Context.MODE_PRIVATE);
+            "tuannt", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         boolean check = sharedPreferences.getBoolean(nameSetting[position], true);
-        if(check){
+        if (check) {
             ivSwitch.setImageResource(R.drawable.switch_yes);
             ivSwitch.setTag(R.drawable.switch_yes);
-        }else{
+        } else {
             ivSwitch.setImageResource(R.drawable.switch_no);
             ivSwitch.setTag(R.drawable.switch_no);
         }
         ivSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if((int)ivSwitch.getTag() == R.drawable.switch_no){
+                if ((int) ivSwitch.getTag() == R.drawable.switch_no) {
                     ivSwitch.setImageResource(R.drawable.switch_yes);
                     ivSwitch.setTag(R.drawable.switch_yes);
                     editor.putBoolean(nameSetting[position], true);
                     editor.commit();
-                }else{
+                } else {
                     ivSwitch.setImageResource(R.drawable.switch_no);
                     ivSwitch.setTag(R.drawable.switch_no);
                     editor.putBoolean(nameSetting[position], false);
@@ -87,5 +83,4 @@ public class SettingAdapter extends BaseAdapter {
         });
         return convertView;
     }
-
 }

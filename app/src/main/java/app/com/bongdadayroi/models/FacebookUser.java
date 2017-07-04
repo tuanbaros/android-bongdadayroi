@@ -8,15 +8,10 @@ import app.com.bongdadayroi.myapp.ScreenSize;
  * Created by tuan on 27/03/2016.
  */
 public class FacebookUser {
-
     private String user_id = null;
-
     private String user_name = null;
-
     private String auth_token = null;
-
     private String user_avatar_uri = null;
-
     private static volatile FacebookUser user = null;
 
     public String getAuth_token() {
@@ -27,21 +22,17 @@ public class FacebookUser {
         this.auth_token = auth_token;
     }
 
-
-
-    private FacebookUser(){
-
+    private FacebookUser() {
     }
 
     public static FacebookUser getInstance() {
-        if (user == null ) {
+        if (user == null) {
             synchronized (FacebookUser.class) {
                 if (user == null) {
                     user = new FacebookUser();
                 }
             }
         }
-
         return user;
     }
 
@@ -69,18 +60,19 @@ public class FacebookUser {
         this.user_avatar_uri = user_avatar_uri;
     }
 
-    public void reset(){
+    public void reset() {
         this.user_id = null;
         this.user_name = null;
         this.user_avatar_uri = null;
         this.auth_token = null;
     }
 
-    public void setInformation(Profile profile){
-        if(profile != null){
+    public void setInformation(Profile profile) {
+        if (profile != null) {
             this.user_id = profile.getId();
             this.user_name = profile.getName();
-            this.user_avatar_uri = profile.getProfilePictureUri(ScreenSize.WIDTH / 3, ScreenSize.WIDTH / 3).toString();
+            this.user_avatar_uri =
+                profile.getProfilePictureUri(ScreenSize.WIDTH / 3, ScreenSize.WIDTH / 3).toString();
         }
     }
 }

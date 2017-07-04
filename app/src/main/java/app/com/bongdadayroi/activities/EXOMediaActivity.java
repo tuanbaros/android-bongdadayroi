@@ -73,50 +73,32 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVideo, MyLogin ,YouTubePlayer.OnInitializedListener{
-
+public class EXOMediaActivity extends YouTubeBaseActivity
+    implements GetInfoVideo, MyLogin, YouTubePlayer.OnInitializedListener {
     private MyVideo myVideo;
-
     private TextView tvNumLike;
-
     private boolean isFullscreen = false;
-
     private YouTubePlayer youTubePlayer;
-
     private YouTubePlayerView mYouTubePlayerView;
-
     private ScrollView scrollView;
-
-//    private ProgressBar progressBar;
+    //    private ProgressBar progressBar;
 //
 //    private ListView listView;
 //
 //    private LinearLayout llTry;
 //
 //    private Button button;
-
     private PagerSlidingTabStrip tabsStrip;
-
     private CallbackManager callbackManager;
-
     private ProfileTracker profileTracker;
-
     ViewPageAdapter viewPageAdapter;
-
     ViewPager viewPager;
-
     boolean checkshare = false;
-
     RelativeLayout Llayout_customshare;
-
     private ImageView ivLike, ivFollow;
-
     private int infoHeight = 0;
-
     private RelativeLayout rlOverlay;
-
-//    private ImageView ivContinue;
-
+    //    private ImageView ivContinue;
     //video
     EMVideoView emVideoView;
     OnPreparedListener first, second;
@@ -128,8 +110,6 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
     ArrayList<String> webArray = new ArrayList<>();
     ArrayList<String> listLinkLiveStream = new ArrayList<>();
     int count = 0;
-
-
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
         @Override
         public void onSuccess(LoginResult loginResult) {
@@ -144,47 +124,32 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
 
         @Override
         public void onCancel() {
-
         }
 
         @Override
         public void onError(FacebookException e) {
-
         }
     };
-
     private int checkPush;
-
     private TwoWayView twvLiveLink;
-
     private boolean isLive = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exomedia);
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+            WindowManager.LayoutParams.FLAG_FULLSCREEN);
         checkPush = getIntent().getIntExtra("push", 0);
-
         TFirebaseAnalytics.setAnalytic(this);
-
-        TextView textView = (TextView)findViewById(R.id.feature);
+        TextView textView = (TextView) findViewById(R.id.feature);
         textView.setText(Config.APP_NAME);
-
-        scrollView = (ScrollView)findViewById(R.id.scroll);
+        scrollView = (ScrollView) findViewById(R.id.scroll);
         scrollView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
-
         myVideo = (MyVideo) getIntent().getSerializableExtra("video");
-
         Log.i("post_id123:", "post_id123: " + myVideo.getPost_id());
-
         callbackManager = CallbackManager.Factory.create();
-
         LoginManager.getInstance().registerCallback(callbackManager, callback);
-
         profileTracker = new ProfileTracker() {
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile newProfile) {
@@ -194,47 +159,37 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
                 }
             }
         };
-
         profileTracker.startTracking();
-
         DatabaseAdapter databaseAdapter = new DatabaseAdapter(getBaseContext());
         databaseAdapter.open();
         Log.i("count", "count : " + databaseAdapter.getAllRows().getCount());
         databaseAdapter.close();
-
         setUpYoutube();
-
         setUpTextViewInfo();
-
         setUpImageViewControl();
-
         setUpTabTrip();
-
         setUpShare();
-
         setUpTWVLiveStream();
-
         setUpEMVideo();
-
-
     }
 
     private void setUpTWVLiveStream() {
-        twvLiveLink = (TwoWayView)findViewById(R.id.twvLiveLink);
-        rlOverlay = (RelativeLayout)findViewById(R.id.rlOverlay);
+        twvLiveLink = (TwoWayView) findViewById(R.id.twvLiveLink);
+        rlOverlay = (RelativeLayout) findViewById(R.id.rlOverlay);
     }
 
     private void setUpButtonFullScreen() {
-        rlMain = (RelativeLayout)findViewById(R.id.rlMain);
-        imageView = (ImageView)findViewById(R.id.ivFull);
+        rlMain = (RelativeLayout) findViewById(R.id.rlMain);
+        imageView = (ImageView) findViewById(R.id.ivFull);
         imageView.setVisibility(View.GONE);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                relativeLayout = (RelativeLayout)findViewById(R.id.topBar);
+                relativeLayout = (RelativeLayout) findViewById(R.id.topBar);
                 relativeLayout.setVisibility(View.GONE);
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                emVideoView.setLayoutParams(new RelativeLayout.LayoutParams(ScreenSize.HEIGHT, ScreenSize.WIDTH));
+                emVideoView.setLayoutParams(
+                    new RelativeLayout.LayoutParams(ScreenSize.HEIGHT, ScreenSize.WIDTH));
                 isFullscreen = true;
                 imageView.setVisibility(View.GONE);
             }
@@ -242,9 +197,10 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
     }
 
     private void setUpEMVideo() {
-        emVideoView = (EMVideoView)findViewById(R.id.emVideoView);
+        emVideoView = (EMVideoView) findViewById(R.id.emVideoView);
         setUpButtonFullScreen();
-        emVideoView.setLayoutParams(new RelativeLayout.LayoutParams(ScreenSize.WIDTH, ScreenSize.WIDTH*9/16));
+        emVideoView.setLayoutParams(
+            new RelativeLayout.LayoutParams(ScreenSize.WIDTH, ScreenSize.WIDTH * 9 / 16));
         emVideoView.setDefaultControlsEnabled(true);
 //        emVideoView.setOnTouchListener(onTouchListener);
         first = new OnPreparedListener() {
@@ -253,35 +209,32 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
                 emVideoView.start();
                 emVideoView.showDefaultControls();
                 rlOverlay.setVisibility(View.VISIBLE);
-                if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+                if (getResources().getConfiguration().orientation ==
+                    Configuration.ORIENTATION_PORTRAIT) {
                     imageView.setVisibility(View.VISIBLE);
                 }
-                if(isLive){
+                if (isLive) {
                     twvLiveLink.setVisibility(View.VISIBLE);
                 }
-
                 MyRequest.countView(myVideo.getPost_id());
             }
-
         };
         second = new OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 emVideoView.pause();
-                if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+                if (getResources().getConfiguration().orientation ==
+                    Configuration.ORIENTATION_PORTRAIT) {
                     imageView.setVisibility(View.VISIBLE);
                 }
             }
         };
-
         onErrorListener = new OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
-
                 return false;
             }
         };
-
         emVideoView.setVideoViewControlsCallback(new EMVideoViewControlsCallback() {
             @Override
             public boolean onPlayPauseClicked() {
@@ -300,9 +253,9 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
 
             @Override
             public boolean onControlsShown() {
-                if(!isFullscreen)
+                if (!isFullscreen)
                     imageView.setVisibility(View.VISIBLE);
-                if(isLive)
+                if (isLive)
                     twvLiveLink.setVisibility(View.VISIBLE);
                 rlOverlay.setVisibility(View.VISIBLE);
                 return true;
@@ -317,33 +270,31 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
                 return true;
             }
         });
-
         playEMVideo();
     }
 
-    private void playEMVideo(){
+    private void playEMVideo() {
         isLive = false;
         count = 0;
 //        comment 1
-        if(myVideo.getLink_streamming()==null){
+        if (myVideo.getLink_streamming() == null) {
             isLive = false;
             twvLiveLink.setVisibility(View.GONE);
-            if (myVideo.getVideo_url()!=null){
+            if (myVideo.getVideo_url() != null) {
                 playYoutubeEMVideo();
-            }else{
+            } else {
                 playMP4EMVideo();
             }
-        }else{
+        } else {
 //            twvLiveLink.setVisibility(View.VISIBLE);
             isLive = true;
             getArrayStream();
         }
-
     }
 
     private void playM3U8VideoStream() {
-        if (m3u8Array.size()>0){
-            if(count<m3u8Array.size()){
+        if (m3u8Array.size() > 0) {
+            if (count < m3u8Array.size()) {
                 emVideoView.setVideoURI(Uri.parse(m3u8Array.get(count)));
                 Log.i("livestream", "livestream: " + m3u8Array.get(count));
                 count++;
@@ -356,14 +307,13 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
                         return true;
                     }
                 });
-            }else{
+            } else {
                 count = 0;
                 emVideoView.setVisibility(View.GONE);
                 mYouTubePlayerView.setVisibility(View.VISIBLE);
                 playYoutubeStream();
             }
-
-        }else{
+        } else {
             count = 0;
             emVideoView.setVisibility(View.GONE);
             mYouTubePlayerView.setVisibility(View.VISIBLE);
@@ -372,26 +322,25 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
     }
 
     private void playYoutubeStream() {
-        if(youtubeArray.size()>0){
-            if(count<youtubeArray.size()){
-                if(youtubeArray.get(count)!=null){
+        if (youtubeArray.size() > 0) {
+            if (count < youtubeArray.size()) {
+                if (youtubeArray.get(count) != null) {
                     youTubePlayer.loadVideo(youtubeArray.get(count));
                     Log.i("livestream", "livestream: " + youtubeArray.get(count));
                     count++;
                 }
-            }else{
+            } else {
 //                count = 0;
 //                playWebStream();
                 //open web
-
             }
-        }else{
+        } else {
             count = 0;
             playWebStream();
         }
     }
 
-    private void playWebStream(){
+    private void playWebStream() {
         Intent intent = new Intent(EXOMediaActivity.this, WebStreamActivity.class);
         intent.putExtra("video", myVideo.getLink());
         startActivity(intent);
@@ -410,101 +359,91 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
 //        youtubeArray.add("rkXfOt3vNZg");
         webArray.clear();
 //        comment 2
-        for (String s : myVideo.getLink_streamming()){
-            if(s.contains(".m3u8")&&(s.contains(android)||s.contains(app))){
+        for (String s : myVideo.getLink_streamming()) {
+            if (s.contains(".m3u8") && (s.contains(android) || s.contains(app))) {
                 if (s.contains(android)) {
                     listLinkLiveStream.add(s.replace(android, ""));
                     m3u8Array.add(s.replace(android, ""));
-                }
-                else{
+                } else {
                     listLinkLiveStream.add(s.replace(app, ""));
                     m3u8Array.add(s.replace(app, ""));
                 }
-
-            }else{
-                if (s.contains("youtube.com")){
+            } else {
+                if (s.contains("youtube.com")) {
                     listLinkLiveStream.add(s.substring(31));
                     youtubeArray.add(s.substring(31));
-                }else{
+                } else {
                     webArray.add(s);
                 }
             }
-
         }
-
         Log.i("sizeArr", "sizeArray: " + m3u8Array.size());
-
         isLive = true;
         twvLiveLink.setAdapter(new LiveStreamAdapter(this, listLinkLiveStream));
         twvLiveLink.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String link = listLinkLiveStream.get(i);
-                if (link.contains(".m3u8")){
+                if (link.contains(".m3u8")) {
                     playM3U8StreamLink(link);
-                }else{
-                    Toast.makeText(getBaseContext(), "Server đang quá tải, xin vui lòng chọn link khác!",
-                            Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getBaseContext(),
+                        "Server đang quá tải, xin vui lòng chọn link khác!",
+                        Toast.LENGTH_LONG).show();
                 }
-
             }
         });
         playM3U8VideoStream();
     }
 
-
-    private void playM3U8StreamLink(String url){
+    private void playM3U8StreamLink(String url) {
         emVideoView.setVideoURI(Uri.parse(url));
         emVideoView.setOnPreparedListener(first);
         emVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
-                Toast.makeText(getBaseContext(), "Server đang quá tải, xin vui lòng chọn link khác!",
+                Toast
+                    .makeText(getBaseContext(), "Server đang quá tải, xin vui lòng chọn link khác!",
                         Toast.LENGTH_LONG).show();
                 return false;
             }
         });
     }
 
-    private void playYoutubeStreamLink(String url){
-
+    private void playYoutubeStreamLink(String url) {
     }
 
-    private void playYoutubeEMVideo(){
+    private void playYoutubeEMVideo() {
         YouTubeExtractor extractor = YouTubeExtractor.create();
-        extractor.extract(myVideo.getVideo_url().substring(32)).enqueue(new Callback<YouTubeExtractionResult>() {
-            @Override
-            public void onResponse(Call<YouTubeExtractionResult> call, Response<YouTubeExtractionResult> response) {
-                final Uri myUri = response.body().getSd360VideoUri();
-                emVideoView.setVideoURI(myUri);
-                emVideoView.setOnPreparedListener(first);
+        extractor.extract(myVideo.getVideo_url().substring(32))
+            .enqueue(new Callback<YouTubeExtractionResult>() {
+                @Override
+                public void onResponse(Call<YouTubeExtractionResult> call,
+                                       Response<YouTubeExtractionResult> response) {
+                    final Uri myUri = response.body().getSd360VideoUri();
+                    emVideoView.setVideoURI(myUri);
+                    emVideoView.setOnPreparedListener(first);
+                    emVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            emVideoView.setVideoURI(myUri);
+                            emVideoView.setOnPreparedListener(second);
+                        }
+                    });
+                }
 
-                emVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        emVideoView.setVideoURI(myUri);
-                        emVideoView.setOnPreparedListener(second);
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(Call<YouTubeExtractionResult> call, Throwable t) {
-                t.printStackTrace();
-                //Alert your user!
-                Toast.makeText(EXOMediaActivity.this, "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-
+                @Override
+                public void onFailure(Call<YouTubeExtractionResult> call, Throwable t) {
+                    t.printStackTrace();
+                    //Alert your user!
+                    Toast.makeText(EXOMediaActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                }
+            });
     }
 
-    private void playMP4EMVideo(){
+    private void playMP4EMVideo() {
         emVideoView.setVideoURI(Uri.parse(myVideo.getList_video()[0].getLink()));
-
         emVideoView.setOnPreparedListener(first);
-
         emVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -519,68 +458,68 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPageAdapter = new ViewPageAdapter(this, this, myVideo.getPost_id(), this);
         viewPager.setAdapter(viewPageAdapter);
-        Log.i("checkPushComment", "checkPushComment: "+ getIntent().getIntExtra("checkPushComment", 0));
-        if(getIntent().getIntExtra("checkPushComment", 0)>0){
+        Log.i("checkPushComment",
+            "checkPushComment: " + getIntent().getIntExtra("checkPushComment", 0));
+        if (getIntent().getIntExtra("checkPushComment", 0) > 0) {
             viewPager.setCurrentItem(1, true);
-        }else{
+        } else {
             viewPager.setCurrentItem(0, true);
         }
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+            public void onPageScrolled(int position, float positionOffset,
+                                       int positionOffsetPixels) {
             }
 
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
                     LinearLayout linearLayout = (LinearLayout) findViewById(R.id.llHeight);
-                    linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ScreenSize.RELATE_HEIGHT + tabsStrip.getHeight()));
+                    linearLayout.setLayoutParams(
+                        new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            ScreenSize.RELATE_HEIGHT + tabsStrip.getHeight()));
                     Log.i("page", "page 1");
                     scrollView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
                     scrollView.fullScroll(ScrollView.FOCUS_UP);
                 } else {
                     LinearLayout linearLayout = (LinearLayout) findViewById(R.id.llHeight);
-                    linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ScreenSize.COMMENT_HEIGHT));
+                    linearLayout.setLayoutParams(
+                        new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            ScreenSize.COMMENT_HEIGHT));
                     scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
                     scrollView.fullScroll(ScrollView.FOCUS_UP);
                     Log.i("page", "page 2");
                 }
-
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
-
         viewPager.setOffscreenPageLimit(1);
-
         // Give the PagerSlidingTabStrip the ViewPager
         tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
-
     }
 
     private void setUpTextViewInfo() {
         TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTitle.setText(myVideo.getTitle());
         tvNumLike = (TextView) findViewById(R.id.tvNumberLike);
-        if(myVideo.getNum_like().equals("0")){
+        if (myVideo.getNum_like().equals("0")) {
             Random random = new Random();
-            int a=0;
-            if(!myVideo.getNum_view().equals("0")){
-                a  = random.nextInt(Integer.parseInt(myVideo.getNum_view()));
+            int a = 0;
+            if (!myVideo.getNum_view().equals("0")) {
+                a = random.nextInt(Integer.parseInt(myVideo.getNum_view()));
             }
             tvNumLike.setText("" + a);
-        }else{
+        } else {
             tvNumLike.setText(myVideo.getNum_like());
         }
         TextView tvNumSeen = (TextView) findViewById(R.id.tvNumberSeen);
         tvNumSeen.setText(myVideo.getNum_view());
-        final LinearLayout linearLayout = (LinearLayout)findViewById(R.id.bottomBar);
+        final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.bottomBar);
         linearLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -592,12 +531,12 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
     private void setUpImageViewControl() {
         ImageView ivBack = (ImageView) findViewById(R.id.ivLeft);
         ImageView ivShare = (ImageView) findViewById(R.id.ivShare);
-        ivFollow = (ImageView)findViewById(R.id.ivFollow);
+        ivFollow = (ImageView) findViewById(R.id.ivFollow);
         ivFollow.setVisibility(View.GONE);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkPush>0){
+                if (checkPush > 0) {
                     Intent intent = new Intent(EXOMediaActivity.this, SplashActivity.class);
                     startActivity(intent);
                 }
@@ -619,7 +558,7 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
         ivLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if((int)ivLike.getTag() == R.drawable.like2){
+                if ((int) ivLike.getTag() == R.drawable.like2) {
                     ivLike.setImageResource(R.drawable.like1);
                     ivLike.setTag(R.drawable.like1);
                     Gson gson = new Gson();
@@ -627,20 +566,19 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
                     db.open();
                     db.insertRow(new String[]{myVideo.getPost_id(), gson.toJson(myVideo)});
                     db.close();
-                    tvNumLike.setText(""+(Integer.parseInt(tvNumLike.getText().toString()) + 1));
-                }else{
+                    tvNumLike.setText("" + (Integer.parseInt(tvNumLike.getText().toString()) + 1));
+                } else {
                     ivLike.setImageResource(R.drawable.like2);
                     ivLike.setTag(R.drawable.like2);
                     DatabaseAdapter db = new DatabaseAdapter(getBaseContext());
                     db.open();
                     db.deleteRow(myVideo.getPost_id());
                     db.close();
-                    tvNumLike.setText(""+(Integer.parseInt(tvNumLike.getText().toString()) - 1));
+                    tvNumLike.setText("" + (Integer.parseInt(tvNumLike.getText().toString()) - 1));
                 }
                 postLike(myVideo.getPost_id());
             }
         });
-
         ivFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -649,77 +587,74 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
         });
     }
 
-    private void setUpLike(){
+    private void setUpLike() {
         DatabaseAdapter db = new DatabaseAdapter(getBaseContext());
         db.open();
-        if(db.getAllRows().getCount()>0){
-            if(db.checkVideoInDB(myVideo.getPost_id())){
+        if (db.getAllRows().getCount() > 0) {
+            if (db.checkVideoInDB(myVideo.getPost_id())) {
                 ivLike.setImageResource(R.drawable.like1);
                 ivLike.setTag(R.drawable.like1);
-            }else{
+            } else {
                 ivLike.setImageResource(R.drawable.like2);
                 ivLike.setTag(R.drawable.like2);
             }
-        }else{
+        } else {
             ivLike.setImageResource(R.drawable.like2);
             ivLike.setTag(R.drawable.like2);
         }
         db.close();
     }
 
+    private YouTubePlayer.PlayerStateChangeListener playerStateChangeListener =
+        new YouTubePlayer.PlayerStateChangeListener() {
+            @Override
+            public void onAdStarted() {
+            }
 
-    private YouTubePlayer.PlayerStateChangeListener playerStateChangeListener = new YouTubePlayer.PlayerStateChangeListener() {
+            @Override
+            public void onError(YouTubePlayer.ErrorReason arg0) {
+                playYoutubeStream();
+            }
 
-        @Override
-        public void onAdStarted() {
+            @Override
+            public void onLoaded(String arg0) {
+            }
 
-        }
+            @Override
+            public void onLoading() {
+            }
 
-        @Override
-        public void onError(YouTubePlayer.ErrorReason arg0) {
-            playYoutubeStream();
-        }
+            @Override
+            public void onVideoEnded() {
+            }
 
-        @Override
-        public void onLoaded(String arg0) {
-
-        }
-
-        @Override
-        public void onLoading() {
-        }
-
-        @Override
-        public void onVideoEnded() {
-        }
-
-        @Override
-        public void onVideoStarted() {
+            @Override
+            public void onVideoStarted() {
 //            twvLiveLink.setVisibility(View.GONE);
-            MyRequest.countView(myVideo.getPost_id());
-        }
-    };
-
+                MyRequest.countView(myVideo.getPost_id());
+            }
+        };
 
     @Override
     public void onBackPressed() {
         if (isFullscreen) {
-            if(mYouTubePlayerView.getVisibility()==View.VISIBLE){
+            if (mYouTubePlayerView.getVisibility() == View.VISIBLE) {
                 youTubePlayer.setFullscreen(false);
-            }else{
+            } else {
                 relativeLayout.setVisibility(View.VISIBLE);
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                emVideoView.setLayoutParams(new RelativeLayout.LayoutParams(ScreenSize.WIDTH, ScreenSize.WIDTH*9/16));
-                if (!emVideoView.isPlaying()){
+                emVideoView.setLayoutParams(
+                    new RelativeLayout.LayoutParams(ScreenSize.WIDTH, ScreenSize.WIDTH * 9 / 16));
+                if (!emVideoView.isPlaying()) {
                     imageView.setVisibility(View.VISIBLE);
                 }
                 isFullscreen = false;
             }
         } else {
-            if(Llayout_customshare.getVisibility()==View.VISIBLE){
+            if (Llayout_customshare.getVisibility() == View.VISIBLE) {
                 hideShare();
-            }else{
-                if(checkPush>0){
+            } else {
+                if (checkPush > 0) {
                     Intent intent = new Intent(EXOMediaActivity.this, SplashActivity.class);
                     startActivity(intent);
                 }
@@ -727,8 +662,6 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
             }
         }
     }
-
-
 
     @Override
     public void showVideo(final MyVideo myVideo) {
@@ -746,39 +679,42 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
 
     @Override
     public void setHeightView(int height) {
-        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.llHeight);
-        if((height+tabsStrip.getHeight()) > (ScreenSize.RELATE_HEIGHT + tabsStrip.getHeight())){
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.llHeight);
+        if ((height + tabsStrip.getHeight()) > (ScreenSize.RELATE_HEIGHT + tabsStrip.getHeight())) {
             Log.i("set", "has set height");
-            ScreenSize.COMMENT_HEIGHT = height+tabsStrip.getHeight();
-            if(viewPager.getCurrentItem()==0){
-                linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ScreenSize.RELATE_HEIGHT+tabsStrip.getHeight()));
-            }else{
-                linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height + tabsStrip.getHeight()));
+            ScreenSize.COMMENT_HEIGHT = height + tabsStrip.getHeight();
+            if (viewPager.getCurrentItem() == 0) {
+                linearLayout.setLayoutParams(
+                    new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ScreenSize.RELATE_HEIGHT + tabsStrip.getHeight()));
+            } else {
+                linearLayout.setLayoutParams(
+                    new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        height + tabsStrip.getHeight()));
             }
-
-        }else{
+        } else {
             ScreenSize.COMMENT_HEIGHT = ScreenSize.RELATE_HEIGHT + tabsStrip.getHeight();
-            linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ScreenSize.RELATE_HEIGHT + tabsStrip.getHeight()));
+            linearLayout.setLayoutParams(
+                new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ScreenSize.RELATE_HEIGHT + tabsStrip.getHeight()));
         }
-
     }
-
 
     @Override
     public void doLogin() {
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends"));
+        LoginManager.getInstance()
+            .logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends"));
     }
 
     @Override
     public void pauseYoutube() {
         int y = infoHeight + tabsStrip.getHeight();
-
         scrollView.smoothScrollTo(0, y);
-
     }
 
     @Override
-    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+    protected void onActivityResult(final int requestCode, final int resultCode,
+                                    final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
@@ -788,18 +724,16 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
         super.onResume();
         AppEventsLogger.activateApp(this);
         profileTracker.startTracking();
-
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (emVideoView.isPlaying()){
+        if (emVideoView.isPlaying()) {
             emVideoView.pause();
         }
         AppEventsLogger.deactivateApp(this);
     }
-
 
     @Override
     protected void onStop() {
@@ -807,8 +741,7 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
         profileTracker.stopTracking();
     }
 
-
-    private void setUpShare(){
+    private void setUpShare() {
         RelativeLayout Rlayout_fb;
         RelativeLayout Rlayout_gg;
         RelativeLayout Rlayout_mail;
@@ -818,119 +751,91 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
         RelativeLayout Rlayout_link;
         RelativeLayout Rlayout_delete;
         RelativeLayout Rlayout_khac;
-
-
         //share
         Llayout_customshare = (RelativeLayout)
-                findViewById(R.id.Llayout_customshare);
-        Llayout_customshare.setLayoutParams(new RelativeLayout.LayoutParams(ScreenSize.WIDTH, ScreenSize.HEIGHT));
+            findViewById(R.id.Llayout_customshare);
+        Llayout_customshare
+            .setLayoutParams(new RelativeLayout.LayoutParams(ScreenSize.WIDTH, ScreenSize.HEIGHT));
         Llayout_customshare.setVisibility(View.GONE);
-        Rlayout_fb = (RelativeLayout)findViewById(R.id.Rlayout_fb);
+        Rlayout_fb = (RelativeLayout) findViewById(R.id.Rlayout_fb);
         Rlayout_tw = (RelativeLayout)
-                findViewById(R.id.Rlayout_tw);
-        Rlayout_gg = (RelativeLayout)findViewById(R.id.Rlayout_gg);
-        Rlayout_mail = (RelativeLayout)findViewById(R.id.Rlayout_mail);
+            findViewById(R.id.Rlayout_tw);
+        Rlayout_gg = (RelativeLayout) findViewById(R.id.Rlayout_gg);
+        Rlayout_mail = (RelativeLayout) findViewById(R.id.Rlayout_mail);
         Rlayout_sms = (RelativeLayout) findViewById(R.id.Rlayout_sms);
         Rlayout_web = (RelativeLayout) findViewById(R.id.Rlayout_web);
-        Rlayout_link = (RelativeLayout)findViewById(R.id.Rlayout_link);
-        Rlayout_delete = (RelativeLayout)findViewById(R.id.Rlayout_delete);
-        Rlayout_khac = (RelativeLayout)findViewById(R.id.Rlayout_khac);
-
-
+        Rlayout_link = (RelativeLayout) findViewById(R.id.Rlayout_link);
+        Rlayout_delete = (RelativeLayout) findViewById(R.id.Rlayout_delete);
+        Rlayout_khac = (RelativeLayout) findViewById(R.id.Rlayout_khac);
         //share click
         Rlayout_fb.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Log.i("link: ", "linkshare: "+myVideo.getLink());
+                Log.i("link: ", "linkshare: " + myVideo.getLink());
                 Share.shareFb(EXOMediaActivity.this, myVideo.getLink(), myVideo.getTitle());
             }
         });
-
         Rlayout_tw.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Share.shareTw(EXOMediaActivity.this, myVideo.getLink(), myVideo.getTitle());
-
             }
         });
-
         Rlayout_gg.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Share.shareGg(EXOMediaActivity.this, myVideo.getLink(), myVideo.getTitle());
-
             }
         });
-
         Rlayout_mail.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Share.shareMail(EXOMediaActivity.this, myVideo.getLink(), myVideo.getTitle());
-
             }
         });
-
         Rlayout_sms.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Share.shareSMS(EXOMediaActivity.this, myVideo.getLink(), myVideo.getTitle());
-
             }
         });
-
         Rlayout_web.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-
-
-
             }
         });
 //
         Rlayout_link.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Toast.makeText(getBaseContext(), "Copy link",
-                        Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_SHORT).show();
             }
         });
 //
         Rlayout_delete.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-
                 hideShare();
             }
         });
-
         Rlayout_khac.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Share.shareKhac(EXOMediaActivity.this, myVideo.getLink(), myVideo.getTitle());
             }
         });
         Llayout_customshare.setOnTouchListener(new View.OnTouchListener() {
-
             @Override
             public boolean onTouch(View arg0, MotionEvent event) {
                 setTouch(event);
                 return true;
-
             }
         });
     }
@@ -938,7 +843,7 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
     public void hideShare() {
         checkshare = false;
         Animation animShareHide = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.slide_out_top);
+            R.anim.slide_out_top);
         Llayout_customshare.startAnimation(animShareHide);
         Llayout_customshare.setVisibility(View.GONE);
         scrollView.setOnTouchListener(new View.OnTouchListener() {
@@ -952,7 +857,7 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
     public void showShare() {
         checkshare = true;
         Animation animShareShow = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.slide_in_bottom);
+            R.anim.slide_in_bottom);
         Llayout_customshare.setVisibility(View.VISIBLE);
         Llayout_customshare.startAnimation(animShareShow);
         scrollView.setOnTouchListener(new View.OnTouchListener() {
@@ -976,23 +881,20 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
                 if ((pxToDp((int) dist) > DISTANCE)) {
                     hideShare();
                 }
-
                 break;
             case MotionEvent.ACTION_UP:
                 break;
         }
-
     }
 
     public int pxToDp(int px) {
         DisplayMetrics dm = this.getResources().getDisplayMetrics();
         return Math.round(px
-                / (dm.densityDpi / DisplayMetrics.DENSITY_DEFAULT));
+            / (dm.densityDpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
     public void postLike(final String postID) {
         final FacebookUser facebookUser = FacebookUser.getInstance();
-
         HashMap<String, String> params = new HashMap<>();
         params.put(NewAPI.PARAM_APP_ID, Config.APP_ID);
         params.put("post_id", postID);
@@ -1003,37 +905,34 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
         params.put("device_model", Build.MODEL);
         params.put("os", "1");
         params.put("os_ver", "" + Build.VERSION.SDK_INT);
-
-
         AndroidNetworking.post("http://content.amobi.vn/api/apiall/like/")
-                .addHeaders("Cookie", "user_token=" + facebookUser.getAuth_token())
-                .addQueryParameter(params)
-                .setPriority(Priority.MEDIUM)
-                .doNotCacheResponse()
-                .build();
-
-
+            .addHeaders("Cookie", "user_token=" + facebookUser.getAuth_token())
+            .addQueryParameter(params)
+            .setPriority(Priority.MEDIUM)
+            .doNotCacheResponse()
+            .build();
     }
 
     @Override
-    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean b) {
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player,
+                                        boolean b) {
         youTubePlayer = player;
         youTubePlayer.setOnFullscreenListener(onFullscreenListener);
         youTubePlayer.setPlayerStateChangeListener(playerStateChangeListener);
     }
 
     @Override
-    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-
+    public void onInitializationFailure(YouTubePlayer.Provider provider,
+                                        YouTubeInitializationResult youTubeInitializationResult) {
     }
 
-
-    private YouTubePlayer.OnFullscreenListener onFullscreenListener = new YouTubePlayer.OnFullscreenListener() {
-        @Override
-        public void onFullscreen(boolean b) {
-            isFullscreen = b;
-        }
-    };
+    private YouTubePlayer.OnFullscreenListener onFullscreenListener =
+        new YouTubePlayer.OnFullscreenListener() {
+            @Override
+            public void onFullscreen(boolean b) {
+                isFullscreen = b;
+            }
+        };
 
     private void setUpYoutube() {
         if (myVideo != null) {
@@ -1042,7 +941,6 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
 //            mYouTubePlayerView.setOnTouchListener(onTouchListener);
         }
     }
-
 //    private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
 //        @Override
 //        public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -1059,7 +957,6 @@ public class EXOMediaActivity extends YouTubeBaseActivity implements GetInfoVide
 //            return false;
 //        }
 //    };
-
 //    private void hideAndShow() {
 //        runOnUiThread(new Runnable() {
 //            @Override

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:keepScreenOn="true"
-    android:id="@+id/rlMain">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:keepScreenOn="true"
+                android:id="@+id/rlMain">
 
     <RelativeLayout
         android:id="@+id/topBar"
@@ -19,7 +19,7 @@
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
             android:padding="18dp"
-            android:src="@drawable/left" />
+            android:src="@drawable/left"/>
 
         <TextView
             android:id="@+id/feature"
@@ -29,7 +29,7 @@
             android:gravity="center_vertical|left"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <ImageView
             android:id="@+id/ivLike"
@@ -38,7 +38,7 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_toLeftOf="@+id/ivFollow"
             android:padding="@dimen/activity_horizontal_margin"
-            android:src="@drawable/like2" />
+            android:src="@drawable/like2"/>
 
         <ImageView
             android:id="@+id/ivFollow"
@@ -47,7 +47,7 @@
             android:layout_height="?attr/actionBarSize"
             android:padding="@dimen/activity_horizontal_margin"
             android:layout_toLeftOf="@+id/ivShare"
-            android:src="@drawable/following" />
+            android:src="@drawable/following"/>
 
         <ImageView
             android:id="@+id/ivShare"
@@ -56,7 +56,7 @@
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
             android:padding="@dimen/activity_horizontal_margin"
-            android:src="@drawable/share" />
+            android:src="@drawable/share"/>
 
     </RelativeLayout>
 
@@ -69,7 +69,7 @@
         <com.devbrackets.android.exomedia.EMVideoView
             android:id="@+id/emVideoView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
         <com.google.android.youtube.player.YouTubePlayerView
             android:id="@+id/youtube_player"
@@ -91,6 +91,7 @@
         android:background="#70000000"
         android:visibility="gone"
         >
+
         <ImageView
             android:id="@+id/ivFull"
             android:padding="12dp"
@@ -145,7 +146,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="gravity"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -161,7 +162,7 @@
                             android:drawablePadding="5dp"
                             android:gravity="center_vertical"
                             android:text="12k"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"/>
 
                         <TextView
                             android:id="@+id/tvNumberSeen"
@@ -172,7 +173,7 @@
                             android:drawablePadding="5dp"
                             android:gravity="center_vertical"
                             android:text="12k"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"/>
 
                     </LinearLayout>
 
@@ -180,7 +181,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="5dp"
-                        android:background="@color/bannerheaderhome" />
+                        android:background="@color/bannerheaderhome"/>
 
                 </LinearLayout>
 
@@ -219,7 +220,8 @@
 
     </ScrollView>
 
-    <include layout="@layout/frame_share"
+    <include
+        layout="@layout/frame_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"/>

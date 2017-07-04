@@ -1,16 +1,15 @@
 package app.com.bongdadayroi.models;
 
-import java.io.Serializable;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 /**
  * Created by tuan on 27/03/2016.
  */
 public class CategoryItem implements Serializable {
-
     @SerializedName("id")
     private String id;
-
     @SerializedName("name")
     private String name;
 

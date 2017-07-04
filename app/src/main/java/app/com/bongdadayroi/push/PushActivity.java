@@ -32,55 +32,43 @@ import app.com.bongdadayroi.networks.TFirebaseAnalytics;
 import app.com.bongdadayroi.utils.API;
 
 public class PushActivity extends AppCompatActivity {
-
     private ProgressBar progressBar;
-
     private LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_push);
-
         String post_id = getIntent().getStringExtra("post_id");
-
-        if(post_id == null || post_id.equals("")){
+        if (post_id == null || post_id.equals("")) {
             Intent intent = getIntent();
             Uri uri = intent.getData();
-            Log.i("uri", "uri: "+ uri);
+            Log.i("uri", "uri: " + uri);
             String url = uri.toString();
             try {
-                int start = url.lastIndexOf("-")+2;
+                int start = url.lastIndexOf("-") + 2;
                 int end = url.lastIndexOf(".");
                 post_id = url.substring(start, end);
-                Log.i("uri", "uri: "+ post_id);
-            }catch (Exception e){
-
+                Log.i("uri", "uri: " + post_id);
+            } catch (Exception e) {
             }
-
-
         }
-
-        if (post_id==null){
+        if (post_id == null) {
             Log.i("postnull", "postnull");
             Intent intent = new Intent(PushActivity.this, SplashActivity.class);
             startActivity(intent);
             this.finish();
-        }else{
+        } else {
             TFirebaseAnalytics.setAnalytic(this);
-
             DisplayMetrics displaymetrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
             ScreenSize.HEIGHT = displaymetrics.heightPixels;
             ScreenSize.WIDTH = displaymetrics.widthPixels;
-
-            progressBar = (ProgressBar)findViewById(R.id.progressBar);
-            linearLayout = (LinearLayout)findViewById(R.id.llTry);
+            progressBar = (ProgressBar) findViewById(R.id.progressBar);
+            linearLayout = (LinearLayout) findViewById(R.id.llTry);
             Button button = (Button) findViewById(R.id.btRetry);
-
-
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -89,82 +77,67 @@ public class PushActivity extends AppCompatActivity {
                     requestData(getIntent().getStringExtra("post_id"));
                     AccessToken accessToken = AccessToken.getCurrentAccessToken();
                     Profile profile = Profile.getCurrentProfile();
-                    if(accessToken!=null){
+                    if (accessToken != null) {
                         Log.i("token", "mytoken: " + accessToken.getToken());
-                        MyRequest.requestGetToken(getApplicationContext(), accessToken.getToken(), null);
-                        if(profile!=null){
+                        MyRequest
+                            .requestGetToken(getApplicationContext(), accessToken.getToken(), null);
+                        if (profile != null) {
                             FacebookUser facebookUser = FacebookUser.getInstance();
                             facebookUser.setInformation(profile);
                         }
                     }
                 }
             });
-
             Log.i("post_id", "post_id: " + getIntent().getStringExtra("post_id"));
-
             requestData(post_id);
         }
-
-
-
-
     }
 
-
-
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         Profile profile = Profile.getCurrentProfile();
-        if(accessToken!=null){
+        if (accessToken != null) {
             Log.i("token", "mytoken: " + accessToken.getToken());
             MyRequest.requestGetToken(getApplicationContext(), accessToken.getToken(), null);
-            if(profile!=null){
+            if (profile != null) {
                 FacebookUser facebookUser = FacebookUser.getInstance();
                 facebookUser.setInformation(profile);
             }
         }
-
-
     }
 
-
-    private void requestData(String post_id){
-
+    private void requestData(String post_id) {
         AndroidNetworking.get(API.VIDEO_DETAIL + post_id)
-                .setPriority(Priority.MEDIUM)
-                .doNotCacheResponse()
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Gson gson = new Gson();
-                        Push push = gson.fromJson(response.toString(), Push.class);
-
-                        Intent intent = new Intent(PushActivity.this, EXOMediaActivity.class);
-                        intent.putExtra("video", push.getData());
-                        intent.putExtra("push", 1);
-                        if(getIntent().getIntExtra("checkPushComment", 0)>0){
-                            intent.putExtra("checkPushComment", 1);
-                        }
-                        startActivity(intent);
-                        PushActivity.this.finish();
+            .setPriority(Priority.MEDIUM)
+            .doNotCacheResponse()
+            .build()
+            .getAsJSONObject(new JSONObjectRequestListener() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Gson gson = new Gson();
+                    Push push = gson.fromJson(response.toString(), Push.class);
+                    Intent intent = new Intent(PushActivity.this, EXOMediaActivity.class);
+                    intent.putExtra("video", push.getData());
+                    intent.putExtra("push", 1);
+                    if (getIntent().getIntExtra("checkPushComment", 0) > 0) {
+                        intent.putExtra("checkPushComment", 1);
                     }
+                    startActivity(intent);
+                    PushActivity.this.finish();
+                }
 
-                    @Override
-                    public void onError(ANError ANError) {
-                        progressBar.setVisibility(View.GONE);
-                        linearLayout.setVisibility(View.VISIBLE);
-                    }
-                });
+                @Override
+                public void onError(ANError ANError) {
+                    progressBar.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.VISIBLE);
+                }
+            });
     }
-
-
 
     @Override
     public void onNewIntent(Intent intent) {
         this.setIntent(intent);
     }
-
 }
